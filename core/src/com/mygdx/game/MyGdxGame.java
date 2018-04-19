@@ -995,23 +995,23 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
     public void renderRunning() {
         checkInput();
-        checkPlayerXMoveTowards();
+        //checkPlayerXMoveTowards();
         bulletLogic();
         exitDoorCheck();
         keyCheck();
         playerLifeCheck();
         checkWallCollision();
-        checkWallCollisionEnemy();
+        //checkWallCollisionEnemy();
 
 
-        if (keys.get(0).getHasKey() == true && once == false) {
+        /* if (keys.get(0).getHasKey() == true && once == false) {
 
             com.mygdx.game.Enemy santa = new Enemy("s1.png", 1100, 480, 100, 400);
 
             santa.sprite.flip(true, false);
             enemies.add(santa);
             once = true;
-        }
+        } */
 
 
         players.get(0).duckSwitchOn();
@@ -1134,6 +1134,8 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
             }
         }
 
+        /*
+
         for (com.mygdx.game.Enemy e : enemies) {
             e.updatePositionFromSpeed();
             e.setSpeedY(-2);
@@ -1154,6 +1156,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
         checkEnemyCollision();
 
 
+*/
         for (Player player : players) {
             player.updatePositionFromSpeed();
             if (jumpcheck == false) {
@@ -1188,7 +1191,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
 
 
-
+/*
         //ritar ut enemyBullets
         for (Bullet enemyBullet : enemyBullets) {
             if (enemyBullet != null) {
@@ -1197,7 +1200,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
                 enemyBullet.draw(batch);
             }
         }
-
+       */
 
         // Ritar ut exit door
 
@@ -1228,6 +1231,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
         var1 = this.bullets.iterator();
 
+
         while (var1.hasNext()) {
             enemy1 = (Bullet) var1.next();
 
@@ -1245,7 +1249,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
             enemy.updatePositionFromSpeed();
             enemy.draw(batch);
         }
-
+ /*
         var1 = enemies.iterator();
 
         while (var1.hasNext()) {
@@ -1255,6 +1259,8 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
             enemy2.draw(batch);
         }
+
+        */
 
         for (Player player : players) {
             checkObstacleCollision(player);
