@@ -1,6 +1,5 @@
 package com.mygdx.game;
 
-import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
@@ -10,12 +9,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Touchpad;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+
+import DB.Interface.DBHandler;
 
 
 public class MyGdxGame extends ApplicationAdapter implements ApplicationListener, InputProcessor {
@@ -164,6 +163,16 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
     private ArrayList<Explossion> explo;
 
 
+    // Oponent player
+
+    Enemy opponent;
+
+    // Db
+
+    DBHandler dbh;
+
+
+
     @Override
     public void create() {
         batch = new SpriteBatch();
@@ -192,6 +201,12 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
         rocketSound = Gdx.audio.newSound(Gdx.files.internal("Rocket-Sound.wav"));
         doorSound = Gdx.audio.newSound(Gdx.files.internal("doorwood_open.wav"));
 
+
+         dbh = new DBHandler();
+
+
+
+
         /*
 
         // android bottons
@@ -204,9 +219,10 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
         createActors();
         createObstacles();
+        //createOpponent();
 
-        createObstacles2();
-        createObstacles3();
+        //createObstacles2();
+        //createObstacles3();
 
 
         //loopSound.loop();
@@ -214,17 +230,33 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
     }
 
+    private void createOpponent(){
+
+
+
+
+
+
+    }
+
     private void createActors() {
         boolean bulletPos = true;
         players = new ArrayList<Player>();
-        enemies = new ArrayList();
+       enemies = new ArrayList();
         bullets = new ArrayList();
         enemyBullets = new ArrayList();
         exitDoors = new ArrayList();
         keys = new ArrayList();
 
 
-        com.mygdx.game.Enemy enemy = new Enemy("s1.png", 900, 500, 50, 30);
+
+        com.mygdx.game.Enemy e1 = new Enemy("s1.png", 20, 600, 50, 50);
+        enemies.add(e1);
+
+        opponent = new Enemy("s1.png", 20, 600, 50, 30);
+
+
+        /*com.mygdx.game.Enemy enemy = new Enemy("s1.png", 900, 500, 50, 30);
 
         enemies.add(enemy);
 
@@ -248,7 +280,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
         enemies.add(en7);
 
         com.mygdx.game.Enemy en8 = new Enemy("s1.png", 900, 350, 50, 30);
-        enemies.add(en8);
+        enemies.add(en8);*/
 
 
         Player player = new Player("Walk_Shoot__005.png", 20, 600, 50, 100, false, false); // new parameters in the Player class
@@ -373,12 +405,13 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
     public void createActors2() {
 
 
+        /*
         com.mygdx.game.Enemy e1 = new Enemy("s1.png", 500, 100, 50, 50);
         enemies.add(e1);
 
         com.mygdx.game.Enemy e2 = new Enemy("s1.png", 300, 100, 50, 30);
         enemies.add(e2);
-
+*/
 
     }
 
@@ -518,10 +551,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
     }
 
-    public void createActors3() {
 
-
-    }
 
     public void createObstacles3() {
         healthPacks3 = new ArrayList();
@@ -965,7 +995,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
                 renderInstructions();
                 break;
             case LEVEL1:
-                renderRunning();
+                testLevel();
                 /*highScoreLogic();*/
                 break;
             case LEVEL2:
@@ -993,7 +1023,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
     }
 
 
-    public void renderRunning() {
+    public void testLevel() {
         checkInput();
         //checkPlayerXMoveTowards();
         bulletLogic();
@@ -1004,14 +1034,12 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
         //checkWallCollisionEnemy();
 
 
-        /* if (keys.get(0).getHasKey() == true && once == false) {
 
-            com.mygdx.game.Enemy santa = new Enemy("s1.png", 1100, 480, 100, 400);
 
-            santa.sprite.flip(true, false);
-            enemies.add(santa);
-            once = true;
-        } */
+
+
+
+
 
 
         players.get(0).duckSwitchOn();
@@ -1134,6 +1162,15 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
             }
         }
 
+
+
+      //  opponent.setY(dbh.getEnemyPositionY());
+        //opponent.setX(dbh.getEnemyPositionX());
+
+
+
+
+
         /*
 
         for (com.mygdx.game.Enemy e : enemies) {
@@ -1145,18 +1182,25 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
         for (Bullet bullet1 : bullets) {
             if (bullet1 != null) {
-                for (com.mygdx.game.Enemy e : enemies) {
+
                     bullet1.updatePositionFromSpeed();
                     checkBulletCollision(bullet1);
                     break;
-                }
+
             }
-        }
-
-        checkEnemyCollision();
+        }*/
 
 
-*/
+
+       // checkEnemyCollision();
+
+
+
+
+
+
+
+
         for (Player player : players) {
             player.updatePositionFromSpeed();
             if (jumpcheck == false) {
@@ -1170,6 +1214,14 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+
+
+        // Sets the position of the Opponent player
+        opponent.sprite.setPosition(dbh.getEnemyPositionX(),dbh.getEnemyPositionY());
+
+
+
+
 
 
         batch.draw(levelImg, 0, 0, 1280, 720);
@@ -1262,6 +1314,8 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
         */
 
+        opponent.draw(batch);
+
         for (Player player : players) {
             checkObstacleCollision(player);
 
@@ -1270,6 +1324,9 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
             player.updatePositionFromSpeed();
             player.draw(batch);
         }
+
+
+
 
 
         // Tar bort player bullet om de kom
@@ -1622,11 +1679,11 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
         for (Bullet bullet1 : bullets) {
             if (bullet1 != null) {
-                for (com.mygdx.game.Enemy e : enemies) {
+
                     bullet1.updatePositionFromSpeed();
                     checkBulletCollision(bullet1);
                     break;
-                }
+
             }
         }
 
@@ -1821,7 +1878,7 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
             bullets.clear();
             enemies.clear();
 
-            createActors3();
+           // createActors3();
 
 
             players.get(0).sprite.setPosition(30, 490);

@@ -15,18 +15,19 @@ public interface Multiplayer {
 
     // Enemy Position
 
-    void getEnemyPosition(float x,float y);
+    float getEnemyPositionX();
+    float getEnemyPositionY();
 
     // addPlayerBullet
 
-    void newPlayerBullet(float x,float y);
+    void setPlayerBullet(float x,float y);
 
 
     // Get Enemy bullet
 
-    void newEnemyBullet(float x,float y);
+    void setEnemyBullet(float x,float y);
 
 
-    // Update methods will be adder here 
+    // Update methods will be adder here
 
 }
