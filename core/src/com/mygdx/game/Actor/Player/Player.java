@@ -1,6 +1,7 @@
-package com.mygdx.game;
+package com.mygdx.game.Actor.Player;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Actor.Abstract.Figure;
 
 /**
  * Created by woojen on 2016-11-14.

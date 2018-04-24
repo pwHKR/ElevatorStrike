@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.mygdx.game.Level.System;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -11,7 +11,7 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Obstacle extends Sprite {
 
-    Sprite sprite;
+    public Sprite sprite;
 
     public Obstacle(String textureFileName, float x, float y, int width, int height) {
         sprite = new Sprite(new Texture(textureFileName));

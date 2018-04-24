@@ -1,4 +1,6 @@
-package com.mygdx.game;
+package com.mygdx.game.Item;
+
+import com.mygdx.game.Level.System.Obstacle;
 
 /**
  * Created by woojen on 2017-01-02.

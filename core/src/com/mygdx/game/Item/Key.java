@@ -1,6 +1,7 @@
-package com.mygdx.game;
+package com.mygdx.game.Item;
 
 import com.badlogic.gdx.math.Rectangle;
+import com.mygdx.game.Item.Item;
 
 /**
  * Created by woojen on 2016-12-07.

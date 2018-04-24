@@ -1,18 +1,16 @@
-package com.mygdx.game;
+package com.mygdx.game.Actor.Abstract;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 
-public class Actor {
+public abstract class Actor {
 
     private int speedX = 0;
     private int speedY = 0;
-    Sprite sprite;
+    public Sprite sprite;
     private final int SHRINK_COLLISION_RADIUS;
 
     public Actor(String textureFileName, float x, float y, int size) {

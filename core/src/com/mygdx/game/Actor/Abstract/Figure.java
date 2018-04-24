@@ -1,15 +1,11 @@
-package com.mygdx.game;
+package com.mygdx.game.Actor.Abstract;
 
-import com.badlogic.gdx.ApplicationAdapter;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygdx.game.Actor.Abstract.Actor;
 
 /**
  * Created by woojen on 2016-11-14.
  */
-public class Figure extends Actor {
+public abstract class Figure extends Actor {
 
     private int Hp;
 
