@@ -1,4 +1,4 @@
-package DB.Interface;
+package DB;
 
 /**
  * Created by woojen on 2018-04-19.

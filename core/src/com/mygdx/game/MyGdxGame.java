@@ -2,41 +2,46 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
-import com.mygdx.game.Actor.Opponent.Enemy;
-import com.mygdx.game.Event.System.Bullet;
-import com.mygdx.game.Event.System.Door;
-import com.mygdx.game.Actor.Player.Player;
-import com.mygdx.game.Event.System.Elevator;
-import com.mygdx.game.Event.System.Explossion;
-import com.mygdx.game.Item.HealthPack;
-import com.mygdx.game.Item.Key;
+
 import com.mygdx.game.Level.LevelFactory;
-import com.mygdx.game.Level.System.Obstacle;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Random;
-
-import DB.Interface.DBHandler;
+import DB.PosStorage;
 
 
 public class MyGdxGame extends ApplicationAdapter implements ApplicationListener {
 
     LevelFactory levelFactory;
+    PosStorage enemyPos;
+
 
 
 
     @Override
     public void create() {
 
+       /* try {
+            dbh = DBHandler.getInstance();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+ */
+
+        //ArrayList<String> temp = new ArrayList<String>();
+
+
+
+
+
+
+       // Gdx.app.log("Room names",dbh.getRoomNames().get(0));
+
+
+
+
+
         levelFactory = LevelFactory.getInstance();
+
 
 
 
@@ -49,8 +54,12 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
 
 
+
         levelFactory.testLevel();
 
+        enemyPos = PosStorage.getInstance();
+
+        enemyPos.setUpdate(true);
 
     }
 

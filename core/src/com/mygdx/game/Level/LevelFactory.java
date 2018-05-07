@@ -19,7 +19,8 @@ import com.mygdx.game.Level.System.Obstacle;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import DB.Interface.DBHandler;
+import DB.PosStorage;
+
 
 /**
  * Created by woojen on 2018-04-24.
@@ -67,7 +68,7 @@ public class LevelFactory {
         doorSound = Gdx.audio.newSound(Gdx.files.internal("doorwood_open.wav"));
 
 
-        dbh = new DBHandler();
+
 
         createActors();
         createObstacles();
@@ -179,9 +180,12 @@ public class LevelFactory {
 
     Enemy opponent;
 
-    // Db
+    // Enemy pos Storage
 
-    DBHandler dbh;
+    PosStorage enemyPosStorage;
+
+
+
 
 
     public void testLevel() {
@@ -317,8 +321,14 @@ public class LevelFactory {
         }
 
 
-        //  opponent.setY(dbh.getEnemyPositionY());
-        //opponent.setX(dbh.getEnemyPositionX());
+
+
+        enemyPosStorage = PosStorage.getInstance();
+        opponent.setY(enemyPosStorage.getEnemyPosY_DB());
+        opponent.setX(enemyPosStorage.getEnemyPosX_DB());
+
+        enemyPosStorage.setPlayerPosX_DB(players.get(0).getX());
+        enemyPosStorage.setPlayerPosY_DB(players.get(0).getY());
 
 
 
@@ -363,7 +373,7 @@ public class LevelFactory {
 
 
         // Sets the position of the Opponent player
-        opponent.sprite.setPosition(dbh.getEnemyPositionX(), dbh.getEnemyPositionY());
+//        opponent.sprite.setPosition(dbh.getEnemyPositionX(), dbh.getEnemyPositionY());
 
 
         batch.draw(levelImg, 0, 0, 1280, 720);

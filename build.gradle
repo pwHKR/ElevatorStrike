@@ -39,6 +39,7 @@ project(":android") {
     configurations { natives }
 
     dependencies {
+
         compile project(":core")
         compile "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
