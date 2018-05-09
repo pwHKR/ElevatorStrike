@@ -11,7 +11,7 @@ import com.mygdx.game.Actor.Player.Player;
 import com.mygdx.game.Event.System.Bullet;
 import com.mygdx.game.Event.System.Door;
 import com.mygdx.game.Event.System.Elevator;
-import com.mygdx.game.Event.System.Explossion;
+import com.mygdx.game.Event.System.Explosion;
 import com.mygdx.game.Item.HealthPack;
 import com.mygdx.game.Item.Key;
 import com.mygdx.game.Level.System.Obstacle;
@@ -173,7 +173,7 @@ public class LevelFactory {
     private ArrayList<Obstacle> walls;
 
 
-    private ArrayList<Explossion> explo;
+    private ArrayList<Explosion> explo;
 
 
     // Oponent player
