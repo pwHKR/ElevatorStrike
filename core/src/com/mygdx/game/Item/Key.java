@@ -1,5 +1,6 @@
 package com.mygdx.game.Item;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Item.Item;
 
@@ -10,7 +11,7 @@ public class Key extends Item {
 
     private boolean hasKey = false;
 
-    public Key(String textureFileName, float x, float y, int width, int height) {
+    public Key(Texture textureFileName, float x, float y, int width, int height) {
         super(textureFileName, x, y, width, height);
 
 

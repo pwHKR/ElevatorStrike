@@ -1,5 +1,6 @@
 package com.mygdx.game.Item;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Item.Item;
 
 /**
@@ -7,7 +8,7 @@ import com.mygdx.game.Item.Item;
  */
 public class HealthPack extends Item {
 
-    public HealthPack(String textureFileName, float x, float y, int width, int height) {
+    public HealthPack(Texture textureFileName, float x, float y, int width, int height) {
         super(textureFileName, x, y, width, height);
     }
 

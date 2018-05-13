@@ -13,8 +13,8 @@ public class Obstacle extends Sprite {
 
     public Sprite sprite;
 
-    public Obstacle(String textureFileName, float x, float y, int width, int height) {
-        sprite = new Sprite(new Texture(textureFileName));
+    public Obstacle(Texture textureFileName, float x, float y, int width, int height) {
+        sprite = new Sprite(textureFileName);
         sprite.setSize(width, height);
         sprite.setX(x);
         sprite.setY(y);

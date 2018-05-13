@@ -6,14 +6,12 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.TimeUtils;
 import com.mygdx.game.Actor.Opponent.Enemy;
 import com.mygdx.game.Actor.Player.Player;
 import com.mygdx.game.Event.System.Bullet;
 import com.mygdx.game.Event.System.Door;
 import com.mygdx.game.Event.System.Elevator;
-import com.mygdx.game.Event.System.Explossion;
-import com.mygdx.game.Item.HealthPack;
-import com.mygdx.game.Item.Key;
 import com.mygdx.game.Level.System.Obstacle;
 
 import java.util.ArrayList;
@@ -26,11 +24,11 @@ import DB.PosStorage;
  * Created by woojen on 2018-04-24.
  */
 
-public class LevelFactory {
+public class LevelFactory  {
 
     private static LevelFactory instance;
 
-    public static LevelFactory getInstance() {
+    public static  LevelFactory getInstance() {
 
 
         if (instance == null) {
@@ -43,8 +41,8 @@ public class LevelFactory {
 
         batch = new SpriteBatch();
         levelImg = new Texture("brickWall.png");
-        titleScreen = new Texture("gWelcome.png");
-        instScreen = new Texture("gInstructions.png");
+        //titleScreen = new Texture("gWelcome.png");
+        // instScreen = new Texture("gInstructions.png");
         hpBar = new Texture("fullHP.png");
         hpBar80 = new Texture("80hp.png");
         hpBar50 = new Texture("50HP.png");
@@ -52,27 +50,45 @@ public class LevelFactory {
         hpBar10 = new Texture("10 hp.png");
         elevatorWire = new Texture("wire2.png");
         gameOver = new Texture("Game_over2.png");
-        Level22 = new Texture("bloody_wall.jpg");
+        bulletTexture = new Texture("OrangeScale__003.png");
+        obstacleTexture = new Texture("we.png");
+        openDoorTexture = new Texture("DoorOpen.png");
+        closedDoorTexture = new Texture("DoorUnlocked.png");
+        osynligTexture = new Texture("osynlig.png");
+        playerIdleTexture = new Texture("Walk_Shoot__005.png");
+        enemyIdleTexture = new Texture("s1.png");
+        playerIdleUpdateTexture = new Texture("i1.png");
+        playerAnimation1 = new Texture("Run_Shoot__001.png");
+        playerAnimation2 = new Texture("Run_Shoot__002.png");
+        playerAnimation3 = new Texture("Run_Shoot__003.png");
+        playerAnimation4 = new Texture("Run_Shoot__004.png");
+        playerAnimation5 = new Texture("Run_Shoot__005.png");
+        playerAnimation6 = new Texture("Run_Shoot__006.png");
+        playerAnimation7 = new Texture("Run_Shoot__007.png");
+        playerAnimation8 = new Texture("Run_Shoot__008.png");
+        playerAnimation9 = new Texture("Run_Shoot__009.png");
 
-        exitSign = new Texture("exit_sign.gif");
-        gameDone = new Texture("gameFinished1.png");
-        LevelClear = new Texture("LevelClear.png");
+        playerJumpImage = new Texture("j1.png");
+        playerDuckImage = new Texture("lay.png");
+
+        //Level22 = new Texture("bloody_wall.jpg");
+
+        //exitSign = new Texture("exit_sign.gif");
+        //gameDone = new Texture("gameFinished1.png");
+        //LevelClear = new Texture("LevelClear.png");
         //scoreFont = new BitmapFont(Gdx.files.internal("font.fnt"));
-        gunShotSound = Gdx.audio.newSound(Gdx.files.internal("Gun_Fire.wav"));
+        //gunShotSound = Gdx.audio.newSound(Gdx.files.internal("Gun_Fire.wav"));
         m4Sound = Gdx.audio.newSound(Gdx.files.internal("M4A1_SingleShot.mp3"));
-        elevatorSound = Gdx.audio.newSound(Gdx.files.internal("Elevator_Stop.wav"));
+        //elevatorSound = Gdx.audio.newSound(Gdx.files.internal("Elevator_Stop.wav"));
         //loopSound = Gdx.audio.newSound(Gdx.files.internal("Beyond_Sanity__192.mp3"));
-        keySound = Gdx.audio.newSound(Gdx.files.internal("gold.wav"));
-        guitarLoop = Gdx.audio.newSound(Gdx.files.internal("eGuitarLoop.wav"));
-        rocketSound = Gdx.audio.newSound(Gdx.files.internal("Rocket-Sound.wav"));
-        doorSound = Gdx.audio.newSound(Gdx.files.internal("doorwood_open.wav"));
-
-
+        //  keySound = Gdx.audio.newSound(Gdx.files.internal("gold.wav"));
+        // guitarLoop = Gdx.audio.newSound(Gdx.files.internal("eGuitarLoop.wav"));
+        //rocketSound = Gdx.audio.newSound(Gdx.files.internal("Rocket-Sound.wav"));
+        //doorSound = Gdx.audio.newSound(Gdx.files.internal("doorwood_open.wav"));
 
 
         createActors();
         createObstacles();
-
 
 
     }
@@ -81,14 +97,10 @@ public class LevelFactory {
     private float sendLimit;
 
 
+
     private enum GameStatus {
         MENU,
         LEVEL1,
-        LEVEL2,
-        LEVEL3,
-        LEVELCLEAR,
-        LEVELCLEAR2,
-        FINISH,
         INSTRUCTIONS,
         GAME_OVER
     }
@@ -98,8 +110,8 @@ public class LevelFactory {
     //Textures
     private SpriteBatch batch;
     private Texture levelImg;
-    private Texture titleScreen;
-    private Texture instScreen;
+    //private Texture titleScreen;
+    //private Texture instScreen;
     private Texture hpBar;
     private Texture hpBar80;
     private Texture hpBar50;
@@ -107,30 +119,54 @@ public class LevelFactory {
     private Texture hpBar10;
     private Texture elevatorWire;
     private Texture gameOver;
-    private Texture Level22;
+    private Texture bulletTexture;
+    private Texture obstacleTexture;
+    private Texture openDoorTexture;
+    private Texture closedDoorTexture;
+    private Texture osynligTexture;
+    private Texture playerIdleTexture;
+    private Texture enemyIdleTexture;
+    private Texture playerIdleUpdateTexture;
 
-    private Texture exitSign;
-    private Texture LevelClear;
+    private Texture playerAnimation1;
+    private Texture playerAnimation2;
+    private Texture playerAnimation3;
+    private Texture playerAnimation4;
+    private Texture playerAnimation5;
+    private Texture playerAnimation6;
+    private Texture playerAnimation7;
+    private Texture playerAnimation8;
+    private Texture playerAnimation9;
+
+    private Texture playerJumpImage;
+    private Texture playerDuckImage;
+
+
+
+
+
+
+    // private Texture Level22;
+
+    //private Texture exitSign;
+    //private Texture LevelClear;
 
     // Game Finished Texture
-    private Texture gameDone;
-
-
-
+    //private Texture gameDone;
 
 
     //Sounds
-    private Sound gunShotSound;
+    //private Sound gunShotSound;
     private Sound m4Sound;
-    private Sound elevatorSound;
+    //private Sound elevatorSound;
     //private Sound loopSound;
-    private Sound keySound;
-    private Sound guitarLoop;
-    private Sound rocketSound;
-    private Sound doorSound;
+    // private Sound keySound;
+    //private Sound guitarLoop;
+    //private Sound rocketSound;
+    //private Sound doorSound;
 
     //counters
-    private float counterElevator = 0;
+    //private float counterElevator = 0;
 
 
     private float walkCounter = 0;
@@ -143,20 +179,17 @@ public class LevelFactory {
     private boolean elevatorUp;
 
 
-
-
     private boolean walking;
 
     private boolean walkCounter0;
 
     private boolean elevatorStopped = true;
-    private boolean keySoundPlaying = false;
 
-    private boolean guitarSoundPlaying = false;
 
     // android logic
     private boolean isShooting = false;
     private boolean androidDown;
+    private boolean androidUp;
 
 
     //Arraylists level 1
@@ -167,13 +200,13 @@ public class LevelFactory {
     private ArrayList<Bullet> enemyBullets;
     private ArrayList<Door> doors;
     private ArrayList<Elevator> elevators;
-    private ArrayList<Door> exitDoors;
-    private ArrayList<Key> keys;
-    private ArrayList<HealthPack> healthPacks3;
-    private ArrayList<Obstacle> walls;
 
 
-    private ArrayList<Explossion> explo;
+    //private ArrayList<HealthPack> healthPacks3;
+    //private ArrayList<Obstacle> walls;
+
+
+    // private ArrayList<Explossion> explo;
 
 
     // Oponent player
@@ -182,37 +215,39 @@ public class LevelFactory {
 
     // Enemy pos Storage
 
-    PosStorage enemyPosStorage;
+    private PosStorage gamePosStorage;
 
-
-
+    private long prevTime = TimeUtils.millis();
 
 
     public void testLevel() {
         checkInput();
 
+
         bulletLogic();
-        exitDoorCheck();
-        keyCheck();
+        getEnemyBulletLogic();
+        checkEnemyCollision();
+
         playerLifeCheck();
-        checkWallCollision();
-
-
+        // checkWallCollision();
+        endGame();
 
 
         players.get(0).duckSwitchOn();
 
+
         // Elevator Floor 1
-        if (elevators.get(0).getY() == 30f && counterElevator < 4.8f) {
+        if (elevators.get(0).getY() == 30f && TimeUtils.timeSinceMillis(prevTime) < 15000) {
+
 
             elevators.get(0).setSpeedY(0);
             if (elevatorStopped == true) {
-                elevatorSound.play();
+                //elevatorSound.play();
                 elevatorStopped = false;
             }
-            counterElevator = counterElevator + 0.016f;
+            // counterElevator = counterElevator + 0.016f;
 
-            if (counterElevator > 4.8f) {
+            if (TimeUtils.timeSinceMillis(prevTime) > 1200) {
                 elevators.get(0).startElevatorBottom();
                 elevatorUp = true;
             }
@@ -220,54 +255,61 @@ public class LevelFactory {
 
 
         // Elevator Floor 2
-        if (elevators.get(0).getY() == 180 && counterElevator < 4.8f) {
+        if (elevators.get(0).getY() == 180 && TimeUtils.timeSinceMillis(prevTime) < 15000) {
+
 
             elevators.get(0).setSpeedY(0);
             if (elevatorStopped == true) {
-                elevatorSound.play();
+                //elevatorSound.play();
                 elevatorStopped = false;
             }
-            counterElevator = counterElevator + 0.016f;
+            //counterElevator = counterElevator + 0.016f;
         }
 
 
         // Elevator Floor 3
-        if (elevators.get(0).getY() == 330 && counterElevator < 4.8f) {
+        if (elevators.get(0).getY() == 330 && TimeUtils.timeSinceMillis(prevTime) < 15000) {
+
 
             elevators.get(0).setSpeedY(0);
             if (elevatorStopped == true) {
-                elevatorSound.play();
+                //elevatorSound.play();
                 elevatorStopped = false;
             }
-            counterElevator = counterElevator + 0.016f;
+            //  counterElevator = counterElevator + 0.016f;
 
 
         }
         // Elevator floor 4
-        if (elevators.get(0).getY() == 480 && counterElevator < 4.8f) {
+        if (elevators.get(0).getY() == 480 && TimeUtils.timeSinceMillis(prevTime) < 15000) {
+
 
             elevators.get(0).setSpeedY(0);
             if (elevatorStopped == true) {
-                elevatorSound.play();
+                //elevatorSound.play();
                 elevatorStopped = false;
             }
-            counterElevator = counterElevator + 0.016f;
+            //counterElevator = counterElevator + 0.016f;
 
-            if (counterElevator > 4.8f) {
+
+            if (TimeUtils.timeSinceMillis(prevTime) > 12000) {
                 elevators.get(0).startElevatorTop();
                 elevatorUp = false;
             }
         }
 
-        if (counterElevator >= 4.8f) {
+        if (TimeUtils.timeSinceMillis(prevTime) >= 12000) {
             if (elevatorUp == false) {
                 elevators.get(0).setSpeedY(-2);
             } else if (elevatorUp == true) {
                 elevators.get(0).setSpeedY(2);
             }
 
-            counterElevator = 0;
+            // counterElevator = 0;
+
+
             elevatorStopped = true;
+            prevTime = TimeUtils.millis();
         }
 
 
@@ -322,13 +364,12 @@ public class LevelFactory {
 
 
 
+        gamePosStorage = PosStorage.getInstance();
+        opponent.setY(gamePosStorage.getEnemyPosY_DB());
+        opponent.setX(gamePosStorage.getEnemyPosX_DB());
 
-        enemyPosStorage = PosStorage.getInstance();
-        opponent.setY(enemyPosStorage.getEnemyPosY_DB());
-        opponent.setX(enemyPosStorage.getEnemyPosX_DB());
-
-        enemyPosStorage.setPlayerPosX_DB(players.get(0).getX());
-        enemyPosStorage.setPlayerPosY_DB(players.get(0).getY());
+        gamePosStorage.setPlayerPosX_DB(players.get(0).getX());
+        gamePosStorage.setPlayerPosY_DB(players.get(0).getY());
 
 
 
@@ -342,16 +383,18 @@ public class LevelFactory {
             checkObstacleCollisionEnemies(e);
         }
 
+*/
+
 
         for (Bullet bullet1 : bullets) {
             if (bullet1 != null) {
 
-                    bullet1.updatePositionFromSpeed();
-                    checkBulletCollision(bullet1);
-                    break;
+                bullet1.updatePositionFromSpeed();
+                checkBulletCollision(bullet1);
+                break;
 
             }
-        }*/
+        }
 
 
         // checkEnemyCollision();
@@ -372,12 +415,8 @@ public class LevelFactory {
         batch.begin();
 
 
-        // Sets the position of the Opponent player
-//        opponent.sprite.setPosition(dbh.getEnemyPositionX(), dbh.getEnemyPositionY());
-
-
         batch.draw(levelImg, 0, 0, 1280, 720);
-        batch.draw(exitSign, 1125, 620, 60, 30);
+//
 
         batch.draw(elevatorWire, elevators.get(0).getX() + 90, elevators.get(0).getY() + 60, 10, 700);
 
@@ -395,7 +434,7 @@ public class LevelFactory {
 
 
 
-/*
+
         //ritar ut enemyBullets
         for (Bullet enemyBullet : enemyBullets) {
             if (enemyBullet != null) {
@@ -404,23 +443,15 @@ public class LevelFactory {
                 enemyBullet.draw(batch);
             }
         }
-       */
 
-        // Ritar ut exit door
 
-        exitDoors.get(0).draw(batch);
 
         // Ritar ut dörrar
         for (Door door : doors) {
             door.draw(batch);
         }
 
-        //Ritar ut exitKey
-
-        if (keys.get(0).getHasKey() == false) {
-            keys.get(0).draw(batch);
-        }
-            /*
+          /*
 
         // android buttons
 
@@ -480,13 +511,6 @@ public class LevelFactory {
         opponent.draw(batch);
 
 
-
-
-
-
-
-
-
         // Tar bort player bullet om de kom
         for (Bullet bullet : bullets) {
             if (bullet.getX() <= 0 || bullet.getX() >= 1280) {
@@ -506,7 +530,7 @@ public class LevelFactory {
         // Android Logic
 
 
-        boolean androidUp = Gdx.input.justTouched() && Gdx.input.getX(0) >= 1125 && Gdx.input.justTouched()
+        androidUp = Gdx.input.justTouched() && Gdx.input.getX(0) >= 1125 && Gdx.input.justTouched()
                 && Gdx.input.getY(0) < 620;
 
         androidDown = Gdx.input.isTouched() && Gdx.input.getX(0) >= 1125 && Gdx.input.isTouched() &&
@@ -588,13 +612,7 @@ public class LevelFactory {
             duckCheck = false;
             players.get(0).sprite.setSize(50, 50);
         }
-        if (Gdx.input.isKeyPressed(Input.Keys.NUM_2)) {
-            gameStatus = gameStatus.LEVEL2;
-        }
 
-        if (Gdx.input.isKeyPressed(Input.Keys.NUM_3)) {
-            gameStatus = gameStatus.LEVEL3;
-        }
 
         if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
             System.exit(0);
@@ -610,17 +628,17 @@ public class LevelFactory {
         enemies = new ArrayList();
         bullets = new ArrayList();
         enemyBullets = new ArrayList();
-        exitDoors = new ArrayList();
-        keys = new ArrayList();
 
 
-        Enemy e1 = new Enemy("s1.png", 20, 600, 50, 50);
+        Enemy e1 = new Enemy(enemyIdleTexture, 20, 600, 50, 50);
         enemies.add(e1);
 
-        opponent = new Enemy("s1.png", 20, 600, 50, 30);
+        opponent = new Enemy(enemyIdleTexture, 20, 600, 50, 30);
 
 
-        Player player = new Player("Walk_Shoot__005.png", 20, 600, 50, 100, false, false); // new parameters in the Player class
+        Player player = new Player(playerIdleTexture, 20, 600, 50, 100, false, false,playerIdleUpdateTexture,
+                playerAnimation1,playerAnimation2,playerAnimation3,playerAnimation4,playerAnimation5,playerAnimation6,playerAnimation7,playerAnimation8,
+                playerAnimation9,playerJumpImage,playerDuckImage); // new parameters in the Player class
 
         player.setSpeedY(-1); // gravity to -1
         players.add(player);
@@ -630,80 +648,78 @@ public class LevelFactory {
         obstacles = new ArrayList<Obstacle>();
         doors = new ArrayList<Door>();
         elevators = new ArrayList();
-        walls = new ArrayList();
+        //walls = new ArrayList();
 
 
         //floor 1
-        Obstacle ground1 = new Obstacle("we.png", 0, 10, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground1 = new Obstacle(obstacleTexture, 0, 10, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground1);
-        Obstacle ground2 = new Obstacle("we.png", 300, 10, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 20);
+        Obstacle ground2 = new Obstacle(obstacleTexture, 300, 10, Gdx.graphics.getWidth() / 3, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground2);
-        Obstacle ground3 = new Obstacle("we.png", 700, 10, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground3 = new Obstacle(obstacleTexture, 700, 10, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground3);
-        Obstacle ground4 = new Obstacle("we.png", 1000, 10, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground4 = new Obstacle(obstacleTexture, 1000, 10, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground4);
 
 
         //floor 2
-        Obstacle ground29 = new Obstacle("we.png", 0, 150, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground29 = new Obstacle(obstacleTexture, 0, 150, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground29);
-        Obstacle ground30 = new Obstacle("we.png", 300, 150, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
+        Obstacle ground30 = new Obstacle(obstacleTexture, 300, 150, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground30);
-        Obstacle ground31 = new Obstacle("we.png", 750, 150, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
+        Obstacle ground31 = new Obstacle(obstacleTexture, 750, 150, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground31);
-        Obstacle ground32 = new Obstacle("we.png", 1000, 150, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground32 = new Obstacle(obstacleTexture, 1000, 150, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground32);
 
 
         //floor 3
-        Obstacle ground25 = new Obstacle("we.png", 0, 300, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground25 = new Obstacle(obstacleTexture, 0, 300, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground25);
-        Obstacle ground26 = new Obstacle("we.png", 300, 300, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
+        Obstacle ground26 = new Obstacle(obstacleTexture, 300, 300, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground26);
-        Obstacle ground27 = new Obstacle("we.png", 750, 300, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
+        Obstacle ground27 = new Obstacle(obstacleTexture, 750, 300, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground27);
-        Obstacle ground28 = new Obstacle("we.png", 1000, 300, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground28 = new Obstacle(obstacleTexture, 1000, 300, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground28);
 
 
         //floor 4
-        Obstacle ground21 = new Obstacle("we.png", 0, 450, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground21 = new Obstacle(obstacleTexture, 0, 450, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground21);
-        Obstacle ground22 = new Obstacle("we.png", 300, 450, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
+        Obstacle ground22 = new Obstacle(obstacleTexture, 300, 450, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground22);
-        Obstacle ground23 = new Obstacle("we.png", 750, 450, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
+        Obstacle ground23 = new Obstacle(obstacleTexture, 750, 450, Gdx.graphics.getWidth() / 5, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground23);
-        Obstacle ground24 = new Obstacle("we.png", 1000, 450, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
+        Obstacle ground24 = new Obstacle(obstacleTexture, 1000, 450, Gdx.graphics.getWidth() / 4, Gdx.graphics.getHeight() / 20);
         obstacles.add(ground24);
 
 
-        Door door1 = new Door("DoorUnlocked.png", 10, 185, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 8);
+        Door door1 = new Door(closedDoorTexture, 10, 185, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 8);
         doors.add(door1);
 
-        Door door2 = new Door("DoorUnlocked.png", 1100, 335, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 8);
+        Door door2 = new Door(closedDoorTexture, 1100, 335, Gdx.graphics.getWidth() / 20, Gdx.graphics.getHeight() / 8);
         doors.add(door2);
 
 
         // Exit door
 
-        Door exitDoor = new Door("doubledoor.png", 1100, 480, 100, 100);
-        exitDoors.add(exitDoor);
+        // Door exitDoor = new Door("doubledoor.png", 1100, 480, 100, 100);
+        //exitDoors.add(exitDoor);
 
-        Elevator elevator = new Elevator("DoorOpen.png", 560, 400, 120);
+        Elevator elevator = new Elevator(openDoorTexture, 560, 400, 120);
         elevator.sprite.setSize(190, 150);
         elevator.setSpeedY(-2);
         elevators.add(elevator);
 
-        // key for exit door
-
-        Key keyLevel1 = new Key("key1.png", 800, 40, 60, 40);
-        keys.add(keyLevel1);
 
         // Top line for elevator
-        Obstacle line = new Obstacle("osynlig.png", elevators.get(0).getX(), elevators.get(0).getY() + 65, 190, 5);
+        Obstacle line = new Obstacle(osynligTexture, elevators.get(0).getX(), elevators.get(0).getY() + 65, 190, 5);
         obstacles.add(line);
 
 
+
+        /*
         // wall right most
 
         Obstacle wall1 = new Obstacle("wall.png", 1279, 0, 20, 720);
@@ -736,6 +752,8 @@ public class LevelFactory {
         Obstacle sideWall6 = new Obstacle("wall.png", 750, 150, 1, 30);
         walls.add(sideWall6);
 
+        */
+
 
     }
 
@@ -744,6 +762,8 @@ public class LevelFactory {
 
         //android logic
 
+        gamePosStorage = PosStorage.getInstance();
+
         androidDown = Gdx.input.isTouched() && Gdx.input.getX(0) >= 1125 && Gdx.input.isTouched() &&
                 Gdx.input.getY() > 620;
 
@@ -751,20 +771,28 @@ public class LevelFactory {
                 Gdx.input.isTouched() && Gdx.input.getY() < 620;
 
 
-        Bullet bullet = new Bullet("OrangeScale__003.png", ((Player) this.players.get(0)).getX() + 10.0F, ((Player) this.players.get(0)).getY() + 25.0F, 10);
+        Bullet bullet = new Bullet(bulletTexture, ((Player) this.players.get(0)).getX() + 10.0F, ((Player) this.players.get(0)).getY() + 25.0F, 10);
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !Gdx.input.isKeyPressed(Input.Keys.DOWN)
                 || isShooting && !androidDown) {
             if (players.get(0).sprite.isFlipX()) {
 
                 bullet.setSpeedX(-6);
+                gamePosStorage.setPlayerBulletDirecton_DB(false);
+
             } else if (players.get(0).sprite.isFlipX() == false) {
                 bullet.setSpeedX(6);
+                gamePosStorage.setPlayerBulletDirecton_DB(true);
             }
             bullets.add(bullet);
+
+            gamePosStorage.setNewPlayerBullet(true);
+            gamePosStorage.setPlayerBulletX_DB(bullet.getX());
+            gamePosStorage.setPlayerBulletY_DB(bullet.getY());
             m4Sound.play(0.3f);
         }
     }
 
+    /*
     private void checkWallCollision() {
 
         if (gameStatus == gameStatus.LEVEL1) {
@@ -784,24 +812,26 @@ public class LevelFactory {
         }
 
 
-    }
+    } */
 
 
     public void enterDoor(Player player) {
 
 
-        if (gameStatus == gameStatus.LEVEL1) {
+        if (gameStatus == GameStatus.LEVEL1) {
 
             if (player.getPlayerRectangle().overlaps(doors.get(0).getCollisionRectangle())
-                    && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                    && Gdx.input.isKeyJustPressed(Input.Keys.E) ||
+                    player.getPlayerRectangle().overlaps(doors.get(0).getCollisionRectangle())) {
                 player.setX(doors.get(1).getX());
                 player.setY(doors.get(1).getY());
-                doorSound.play();
+                // doorSound.play();
             } else if (player.getPlayerRectangle().overlaps(doors.get(1).getCollisionRectangle())
-                    && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+                    && Gdx.input.isKeyJustPressed(Input.Keys.E) ||
+                    player.getPlayerRectangle().overlaps(doors.get(1).getCollisionRectangle()) && androidUp) {
                 player.setX(doors.get(0).getX());
                 player.setY(doors.get(0).getY());
-                doorSound.play();
+                // doorSound.play();
             }
         }
 
@@ -827,91 +857,53 @@ public class LevelFactory {
     }
 
 
-    private void exitDoorCheck() {
+    private void checkObstacleCollision(Player player) {
 
 
-
-        if (gameStatus == gameStatus.LEVEL1) {
-
-            if (players.get(0).getPlayerRectangle().overlaps(exitDoors.get(0).getCollisionRectangle())
-                    && keys.get(0).getHasKey() == true && Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-
-                gameStatus = gameStatus.LEVELCLEAR;
-
-            }
+        for (Obstacle obstacle : obstacles) {
+            if (player.getPlayerRectangle().overlaps(obstacle.getCollisionRectangle()))
+                player.setSpeedY(0);
         }
 
 
     }
-
-
-    public void keyCheck() {
-
-
-
-            if (players.get(0).getPlayerRectangle().overlaps(keys.get(0).getKeyRectangle())) {
-                keys.get(0).setKeyTrue();
-
-                if (keySoundPlaying == false) {
-                    keySound.play();
-                    keySoundPlaying = true;
-                }
-            }
-        }
-
-
-        private void checkObstacleCollision(Player player) {
-
-
-
-                for (Obstacle obstacle : obstacles) {
-                    if (player.getPlayerRectangle().overlaps(obstacle.getCollisionRectangle()))
-                        player.setSpeedY(0);
-                }
-
-
-        }
 
 
     private void checkElevatorOverLap(Player player) {
 
 
-            for (Elevator elevator : elevators) {
+        for (Elevator elevator : elevators) {
 
-                if (elevator.getSpeedY() > 0 && player.getPlayerRectangle().overlaps(obstacles.get(16).getCollisionRectangle())) {
+            if (elevator.getSpeedY() > 0 && player.getPlayerRectangle().overlaps(obstacles.get(16).getCollisionRectangle())) {
 
-                    players.get(0).setY(obstacles.get(16).sprite.getY());
-                }
-
-
-                if (player.getPlayerRectangle().overlaps(elevator.getElevatorRectangle())) {
-
-                    player.setSpeedY(0);
-
-
-                }
-
-
-                if (player.getPlayerRectangle().overlaps(elevator.getElevatorRectangle())) {
-                    if (elevator.getSpeedY() == 0) {
-
-                        player.sprite.setPosition(player.getX(), elevator.getY() + 10);
-
-                    }
-
-                    if (elevator.getSpeedY() != 0) {
-
-                        player.sprite.setPosition(elevator.getX() + 60, elevator.getY() + 10);
-                    }
-                }
+                players.get(0).setY(obstacles.get(16).sprite.getY());
             }
 
 
+            if (player.getPlayerRectangle().overlaps(elevator.getElevatorRectangle())) {
+
+                player.setSpeedY(0);
+
+
+            }
+
+
+            if (player.getPlayerRectangle().overlaps(elevator.getElevatorRectangle())) {
+                if (elevator.getSpeedY() == 0) {
+
+                    player.sprite.setPosition(player.getX(), elevator.getY() + 10);
+
+                }
+
+                if (elevator.getSpeedY() != 0) {
+
+                    player.sprite.setPosition(elevator.getX() + 60, elevator.getY() + 10);
+                }
+            }
+        }
 
 
     }
-
-
 
 
     public void drawHpBar() {
@@ -942,7 +934,7 @@ public class LevelFactory {
         batch.begin();
 
 
-        batch.draw(titleScreen, 0, 0, 1280, 900);
+        //batch.draw(titleScreen, 0, 0, 1280, 900);
         if (Gdx.input.justTouched() == true) {
             gameStatus = gameStatus.LEVEL1;
         }
@@ -967,124 +959,150 @@ public class LevelFactory {
         batch.end();
     }
 
-    public void renderInstructions() {
-        Gdx.gl.glClearColor(50, 50, 50, 50);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(instScreen, 0, 0);
-        if (Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
-            gameStatus = gameStatus.MENU;
-        }
-        batch.end();
-    }
-
-    public void renderFinish() {
-
-        Gdx.gl.glClearColor(50, 50, 50, 50);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(gameDone, 0, 0);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            gameStatus = gameStatus.MENU;
-        }
-        batch.end();
-
-
-    }
-
-    public void renderLevelClear() {
-
-        if (guitarSoundPlaying == false) {
-            guitarLoop.play();
-            guitarSoundPlaying = true;
-        }
-        // level clear bild vid här,
-
-        Gdx.gl.glClearColor(50, 50, 50, 50);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        batch.begin();
-        batch.draw(LevelClear, 0, 0);
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-            gameStatus = gameStatus.LEVEL2;
-        }
-        batch.end();
-
-    }
 
     private void checkBulletCollision(Bullet bullet1) {
         for (Enemy e : enemies) {
-            if (bullet1.getBulletRectangle().overlaps(e.getEnemieRectangle())) {
+            if (bullet1.getBulletRectangle().overlaps(e.getEnemieRectangle()) || bullet1.getBulletRectangle().
+                    overlaps(opponent.getEnemieRectangle())) {
                 bullet1.sprite.setPosition(2000, 2000);
                 e.SetHP(e.GetHP() - 20);
                 //playerScore = playerScore + 10;
                 if (e.GetHP() <= 0) {
                     enemies.remove(e);
+
                     break;
 
                 }
 
             }
 
-        }}
+        }
+    }
 
-        public void switchMenu(){
+    public void switchMenu() {
 
         switch (gameStatus) {
             case MENU:
                 renderMenu();
                 break;
-            case INSTRUCTIONS:
-                //renderInstructions();
-                break;
             case LEVEL1:
                 testLevel();
                 /*highScoreLogic();*/
                 break;
-            case LEVEL2:
-                //renderLevel2();
-                //highScoreLogic();
-                break;
-            case LEVEL3:
-                //renderLevel3();
-                //highScoreLogic();
-                break;
+
             case GAME_OVER:
                 renderGameOver();
                 break;
-            case LEVELCLEAR:
-                renderLevelClear();
+
+        }
+    }
+
+    public void dispose() {
+        levelImg.dispose();
+        hpBar80.dispose();
+        hpBar10.dispose();
+        hpBar30.dispose();
+        hpBar50.dispose();
+        elevatorWire.dispose();
+      batch.dispose();
+        m4Sound.dispose();
+        hpBar.dispose();
+        gameOver.dispose();
+        bulletTexture.dispose();
+        obstacleTexture.dispose();
+        openDoorTexture.dispose();
+        closedDoorTexture.dispose();
+        osynligTexture.dispose();
+        playerIdleTexture.dispose();
+        enemyIdleTexture.dispose();
+        playerIdleUpdateTexture.dispose();
+        playerAnimation1.dispose();
+        playerAnimation2.dispose();
+        playerAnimation3.dispose();
+        playerAnimation4.dispose();
+        playerAnimation5.dispose();
+        playerAnimation6.dispose();
+        playerAnimation7.dispose();
+        playerAnimation8.dispose();
+        playerAnimation9.dispose();
+        playerJumpImage.dispose();
+        playerDuckImage.dispose();
+
+
+
+
+
+
+
+    }
+
+    private void checkEnemyCollision() {
+        for (Bullet enemyBullet : enemyBullets) {
+
+            if (enemyBullet.getBulletRectangle().overlaps(players.get(0).getPlayerRectangle().fitOutside(players.get(0).getPlayerRectangle()))) {
+
+
+                players.get(0).SetHP(players.get(0).GetHP() - 20);
+                //playerScore = playerScore - 10;
+                enemyBullets.remove(enemyBullet);
                 break;
-            case LEVELCLEAR2:
-                //renderLevelClear2();
-                break;
-            case FINISH:
-                renderFinish();
-                //highScoreLogic();
-                break;
-        }}
-
-        private void checkEnemyCollision(){
-            for (Bullet enemyBullet : enemyBullets) {
-
-                if (enemyBullet.getBulletRectangle().overlaps(players.get(0).getPlayerRectangle().fitOutside(players.get(0).getPlayerRectangle()))) {
-
-
-                    players.get(0).SetHP(players.get(0).GetHP() - 20);
-                    //playerScore = playerScore - 10;
-                    enemyBullets.remove(enemyBullet);
-                    break;
-                }
-
-                // Remove the bullets that hasnt collided for enemy
-                if (enemyBullet.getX() < 0 || enemyBullet.getX() > 1280) {
-                    enemyBullets.remove(enemyBullet);
-                    break;
-                }
             }
+
+            // Remove the bullets that hasnt collided for enemy
+            if (enemyBullet.getX() < 0 || enemyBullet.getX() > 1280) {
+                enemyBullets.remove(enemyBullet);
+                break;
+            }
+
 
         }
 
+
+
     }
+
+    private void getEnemyBulletLogic(){
+
+        gamePosStorage = PosStorage.getInstance();
+
+        if(gamePosStorage.isNewEnemyBullet()){
+
+        int direction;
+
+
+
+        if(gamePosStorage.isEnemyBulletDirecton_DB()){
+
+            direction = 6;
+        }
+
+        else {
+
+            direction = -6;
+        }
+
+
+        Bullet bullet = new Bullet(bulletTexture, gamePosStorage.getEnemyBulletX_DB(), gamePosStorage.getEnemyBulletY_DB(), 10);
+        bullet.setSpeedX(direction);
+
+        enemyBullets.add(bullet);
+        gamePosStorage.setNewEnemyBullet(false);
+
+    }}
+
+    private void endGame(){
+
+
+
+        if(players.get(0).GetHP() <= 0){
+            gamePosStorage = PosStorage.getInstance();
+
+            gamePosStorage.setEndGamePlayer(true);
+
+        }
+    }
+
+}
 
 
 

@@ -1,5 +1,6 @@
 package com.mygdx.game.Actor.Opponent;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Actor.Abstract.Figure;
 
@@ -9,7 +10,7 @@ import com.mygdx.game.Actor.Abstract.Figure;
  */
 public class Enemy extends Figure {
 
-    public Enemy(String textureFileName, float x, float y, int size, int Hp) {
+    public Enemy(Texture textureFileName, float x, float y, int size, int Hp) {
         super(textureFileName, x, y, size, Hp);
     }
 
@@ -28,6 +29,8 @@ public class Enemy extends Figure {
                 sprite.getHeight());
     }
 
+
+    /*
 
     public boolean animation(float animationCounter) {
 
@@ -66,13 +69,15 @@ public class Enemy extends Figure {
 
 
             return false;
-    }
+    } */
+
+    /*
 
     public boolean idleImage() {
         updateImage("i1e.png");
         return true;
     }
-
+*/
 
 }
 

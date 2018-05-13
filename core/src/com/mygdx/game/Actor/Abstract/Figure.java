@@ -1,5 +1,6 @@
 package com.mygdx.game.Actor.Abstract;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Actor.Abstract.Actor;
 
 /**
@@ -9,7 +10,7 @@ public abstract class Figure extends Actor {
 
     private int Hp;
 
-    public Figure(String textureFileName, float x, float y, int size, int Hp) {
+    public Figure(Texture textureFileName, float x, float y, int size, int Hp) {
         super(textureFileName, x, y, size);
         this.Hp = Hp;
     }

@@ -1,15 +1,18 @@
 package com.mygdx.game.Event.System;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.mygdx.game.Actor.Abstract.Actor;
+
 
 /**
  * Created by woojen on 2016-12-29.
  */
 public class Explossion extends Actor {
-    public Explossion(String textureFileName, float x, float y, int size) {
+    public Explossion(Texture textureFileName, float x, float y, int size) {
         super(textureFileName, x, y, size);
     }
 
+    /*
 
     public boolean animation(float animationCounter) {
 
@@ -69,7 +72,7 @@ public class Explossion extends Actor {
             System.out.println(animationCounter);
         return false;
     }
-
+*/
 
     }
 

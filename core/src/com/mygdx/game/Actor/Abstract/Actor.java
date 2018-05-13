@@ -5,16 +5,17 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Disposable;
 
-public abstract class Actor {
+public abstract class Actor  {
 
     private int speedX = 0;
     private int speedY = 0;
     public Sprite sprite;
     private final int SHRINK_COLLISION_RADIUS;
 
-    public Actor(String textureFileName, float x, float y, int size) {
-        sprite = new Sprite(new Texture(textureFileName));
+    public Actor(Texture textureFileName, float x, float y, int size) {
+        sprite = new Sprite(textureFileName);
 
         sprite.setSize(size, size);
         sprite.setX(x);
@@ -23,8 +24,8 @@ public abstract class Actor {
     }
 
 
-    public void updateImage(String filename) {
-        sprite.setTexture(new Texture(filename));
+    public void updateImage(Texture filename) {
+        sprite.setTexture(filename);
     }
 
 

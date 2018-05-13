@@ -3,21 +3,25 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 
+
+import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Level.LevelFactory;
+
 
 import DB.PosStorage;
 
 
 public class MyGdxGame extends ApplicationAdapter implements ApplicationListener {
 
-    LevelFactory levelFactory;
-    PosStorage enemyPos;
+    private LevelFactory levelFactory;
+    private PosStorage renderPos;
 
 
 
 
     @Override
     public void create() {
+
 
        /* try {
             dbh = DBHandler.getInstance();
@@ -40,13 +44,15 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
 
 
+
         levelFactory = LevelFactory.getInstance();
 
+
+      //  Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
 
 
     }
-
 
 
 
@@ -55,11 +61,36 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
 
 
+
+
+
         levelFactory.testLevel();
 
-        enemyPos = PosStorage.getInstance();
+        renderPos = PosStorage.getInstance();
 
-        enemyPos.setUpdate(true);
+        renderPos.setUpdate(true);
+
+
+
+        if(renderPos.isEndGameEnemy()){
+
+
+            //Gdx.app.exit();
+
+
+        }
+
+        if(renderPos.isEndGamePlayer()){
+
+            renderPos.setEndGamePlayer(true);
+
+
+        }
+
+
+
+
+
 
     }
 
@@ -68,6 +99,9 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
     @Override
     public void dispose() {
+
+        levelFactory.dispose();
+
 
 
 

@@ -1,5 +1,6 @@
 package com.mygdx.game.Actor.Player;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.mygdx.game.Actor.Abstract.Figure;
 
@@ -11,9 +12,42 @@ public class Player extends Figure {
     private boolean Jumping; // new parameters for player
     private boolean Ducking; // new parameters for player
 
-    public Player(String textureFileName, float x, float y, int size, int Hp, boolean Jumping, boolean Ducking) {
+    private Texture idleUpdateImage;
+
+
+    private Texture playerAnimation1;
+    private Texture playerAnimation2;
+    private Texture playerAnimation3;
+    private Texture playerAnimation4;
+    private Texture playerAnimation5;
+    private Texture playerAnimation6;
+    private Texture playerAnimation7;
+    private Texture playerAnimation8;
+    private Texture playerAnimation9;
+
+    private Texture playerJumpImage;
+    private Texture playerDuckImage;
+
+    public Player(Texture textureFileName, float x, float y, int size, int Hp, boolean Jumping, boolean Ducking, Texture idleUpdateImage,
+                  Texture playerAnimation1, Texture playerAnimation2, Texture playerAnimation3, Texture playerAnimation4,
+                  Texture playerAnimation5, Texture playerAnimation6, Texture playerAnimation7, Texture playerAnimation8,
+                  Texture playerAnimation9, Texture playerJumpImage, Texture playerDuckImage) {
         super(textureFileName, x, y, size, Hp);
         getSprite().setOriginCenter();
+        this.idleUpdateImage = idleUpdateImage;
+
+        this.playerAnimation1 = playerAnimation1;
+        this.playerAnimation2 = playerAnimation2;
+        this.playerAnimation3 = playerAnimation3;
+        this.playerAnimation4 = playerAnimation4;
+        this.playerAnimation5 = playerAnimation5;
+        this.playerAnimation6 = playerAnimation6;
+        this.playerAnimation7 = playerAnimation7;
+        this.playerAnimation8 = playerAnimation8;
+        this.playerAnimation9 = playerAnimation9;
+
+        this.playerJumpImage = playerJumpImage;
+        this.playerDuckImage = playerDuckImage;
     }
 
     public void updatePositionFromSpeed() {
@@ -67,39 +101,39 @@ public class Player extends Figure {
 
 
         if (animationCounter >= 0.12f && animationCounter <= 0.13f) {
-            updateImage("Run_Shoot__001.png");
+            updateImage(playerAnimation1);
 
         }
         if (animationCounter >= 0.24f && animationCounter <= 0.25f) {
-            updateImage("Run_Shoot__002.png");
+            updateImage(playerAnimation2);
 
         }
         if (animationCounter >= 0.36f && animationCounter <= 0.37f) {
-            updateImage("Run_Shoot__003.png");
+            updateImage(playerAnimation3);
 
         }
         if (animationCounter >= 0.48f && animationCounter <= 0.49f) {
-            updateImage("Run_Shoot__004.png");
+            updateImage(playerAnimation4);
 
         }
         if (animationCounter >= 0.60f && animationCounter <= 0.61f) {
-            updateImage("Run_Shoot__005.png");
+            updateImage(playerAnimation5);
 
         }
         if (animationCounter >= 0.82f && animationCounter <= 0.83f) {
-            updateImage("Run_Shoot__006.png");
+            updateImage(playerAnimation6);
 
         }
         if (animationCounter >= 0.94f && animationCounter <= 0.95f) {
-            updateImage("Run_Shoot__007.png");
+            updateImage(playerAnimation7);
 
         }
         if (animationCounter >= 1.05f && animationCounter <= 1.06f) {
-            updateImage("Run_Shoot__008.png");
+            updateImage(playerAnimation8);
 
         }
         if (animationCounter >= 1.17f && animationCounter <= 1.18f) {
-            updateImage("Run_Shoot__009.png");
+            updateImage(playerAnimation9);
 
         }
 
@@ -114,7 +148,7 @@ public class Player extends Figure {
     }
 
     public boolean idleImage() {
-        updateImage("i1.png");
+        updateImage(idleUpdateImage);
         return true;
     }
 
@@ -122,7 +156,7 @@ public class Player extends Figure {
 
         if (Jumping == true) {
 
-            updateImage("j1.png");
+            updateImage(playerJumpImage);
         }
 
 
@@ -130,7 +164,7 @@ public class Player extends Figure {
 
     public void duckImage() {
         if (Ducking == true) {
-            updateImage("lay.png");
+            updateImage(playerDuckImage);
 
         }
 

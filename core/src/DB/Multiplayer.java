@@ -2,7 +2,7 @@ package DB;
 
 /**
  * Created by woojen on 2018-04-19.
- *
+ * <p>
  * Interface for connecting the game classes with the Database classes
  */
 
@@ -10,24 +10,50 @@ public interface Multiplayer {
 
     // Player Position
 
-    void setPlayerPosition(float x,float y);
+    void setPlayerPosition(float x, float y);
 
 
     // Enemy Position
 
     float getEnemyPositionX();
+
     float getEnemyPositionY();
 
-    // addPlayerBullet
 
-    void setPlayerBullet(float x,float y);
+    // Elevator Sync
 
+    boolean getInSyncEnemy();
 
-    // Get Enemy bullet
-
-    void setEnemyBullet(float x,float y);
+    void setInSync(boolean inSync);
 
 
-    // Update methods will be adder here
+    //PlayerBullet
+
+
+    void setBulletPosition(float x, float y, boolean isLeft);
+    void newBullet(boolean newSendBullet);
+
+
+    // get enemy bullets position
+
+    float getBulletPositionX();
+
+    float getBulletPositionY();
+
+    boolean getNewBulletEnemy();
+
+    boolean getEnemyBulletDirection();
+
+
+    // Ack enemy bullet
+
+    void receivedEnemyBullet();
+
+
+
+
+
+
+
 
 }

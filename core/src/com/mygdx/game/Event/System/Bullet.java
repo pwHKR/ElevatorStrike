@@ -1,14 +1,16 @@
 package com.mygdx.game.Event.System;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.utils.Disposable;
 import com.mygdx.game.Actor.Abstract.Actor;
 
 /**
  * Created by Rasmus on 2016-11-20.
  */
 
-public class Bullet extends Actor {
-    public Bullet(String textureFileName, float x, float y, int size) {
+public class Bullet extends Actor  {
+    public Bullet(Texture textureFileName, float x, float y, int size) {
         super(textureFileName, x, y, size);
     }
 
@@ -33,6 +35,7 @@ public class Bullet extends Actor {
                 sprite.getWidth(),
                 sprite.getHeight());
     }
+
 
 
 }
