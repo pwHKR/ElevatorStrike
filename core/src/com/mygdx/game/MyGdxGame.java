@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.ApplicationListener;
 
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.mygdx.game.Level.LevelFactory;
 
@@ -11,7 +12,7 @@ import com.mygdx.game.Level.LevelFactory;
 import DB.PosStorage;
 
 
-public class MyGdxGame extends ApplicationAdapter implements ApplicationListener {
+public class MyGdxGame extends Game {
 
     private LevelFactory levelFactory;
     private PosStorage renderPos;
@@ -45,10 +46,10 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
 
 
-        levelFactory = LevelFactory.getInstance();
+        setScreen(new SplashScreen(this));
 
 
-      //  Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        //Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
 
 
 
@@ -58,13 +59,8 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
     public void render() {
 
+        super.render();
 
-
-
-
-
-
-        levelFactory.testLevel();
 
         renderPos = PosStorage.getInstance();
 
@@ -87,23 +83,12 @@ public class MyGdxGame extends ApplicationAdapter implements ApplicationListener
 
         }
 
-
-
-
-
-
     }
-
-
-
 
     @Override
     public void dispose() {
+        super.dispose();
 
-        levelFactory.dispose();
-
-
-
-
-}}
+    }
+}
 

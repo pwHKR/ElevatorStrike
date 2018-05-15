@@ -2,8 +2,10 @@ package com.mygdx.game.Level;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.TimeUtils;
@@ -13,6 +15,7 @@ import com.mygdx.game.Event.System.Bullet;
 import com.mygdx.game.Event.System.Door;
 import com.mygdx.game.Event.System.Elevator;
 import com.mygdx.game.Level.System.Obstacle;
+import com.mygdx.game.MyGdxGame;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,73 +27,12 @@ import DB.PosStorage;
  * Created by woojen on 2018-04-24.
  */
 
-public class LevelFactory  {
+public class LevelFactory implements Screen {
 
-    private static LevelFactory instance;
+    MyGdxGame game;
 
-    public static  LevelFactory getInstance() {
-
-
-        if (instance == null) {
-            instance = new LevelFactory();
-        }
-        return instance;
-    }
-
-    private LevelFactory() {
-
-        batch = new SpriteBatch();
-        levelImg = new Texture("brickWall.png");
-        //titleScreen = new Texture("gWelcome.png");
-        // instScreen = new Texture("gInstructions.png");
-        hpBar = new Texture("fullHP.png");
-        hpBar80 = new Texture("80hp.png");
-        hpBar50 = new Texture("50HP.png");
-        hpBar30 = new Texture("30 hp.png");
-        hpBar10 = new Texture("10 hp.png");
-        elevatorWire = new Texture("wire2.png");
-        gameOver = new Texture("Game_over2.png");
-        bulletTexture = new Texture("OrangeScale__003.png");
-        obstacleTexture = new Texture("we.png");
-        openDoorTexture = new Texture("DoorOpen.png");
-        closedDoorTexture = new Texture("DoorUnlocked.png");
-        osynligTexture = new Texture("osynlig.png");
-        playerIdleTexture = new Texture("Walk_Shoot__005.png");
-        enemyIdleTexture = new Texture("s1.png");
-        playerIdleUpdateTexture = new Texture("i1.png");
-        playerAnimation1 = new Texture("Run_Shoot__001.png");
-        playerAnimation2 = new Texture("Run_Shoot__002.png");
-        playerAnimation3 = new Texture("Run_Shoot__003.png");
-        playerAnimation4 = new Texture("Run_Shoot__004.png");
-        playerAnimation5 = new Texture("Run_Shoot__005.png");
-        playerAnimation6 = new Texture("Run_Shoot__006.png");
-        playerAnimation7 = new Texture("Run_Shoot__007.png");
-        playerAnimation8 = new Texture("Run_Shoot__008.png");
-        playerAnimation9 = new Texture("Run_Shoot__009.png");
-
-        playerJumpImage = new Texture("j1.png");
-        playerDuckImage = new Texture("lay.png");
-
-        //Level22 = new Texture("bloody_wall.jpg");
-
-        //exitSign = new Texture("exit_sign.gif");
-        //gameDone = new Texture("gameFinished1.png");
-        //LevelClear = new Texture("LevelClear.png");
-        //scoreFont = new BitmapFont(Gdx.files.internal("font.fnt"));
-        //gunShotSound = Gdx.audio.newSound(Gdx.files.internal("Gun_Fire.wav"));
-        m4Sound = Gdx.audio.newSound(Gdx.files.internal("M4A1_SingleShot.mp3"));
-        //elevatorSound = Gdx.audio.newSound(Gdx.files.internal("Elevator_Stop.wav"));
-        //loopSound = Gdx.audio.newSound(Gdx.files.internal("Beyond_Sanity__192.mp3"));
-        //  keySound = Gdx.audio.newSound(Gdx.files.internal("gold.wav"));
-        // guitarLoop = Gdx.audio.newSound(Gdx.files.internal("eGuitarLoop.wav"));
-        //rocketSound = Gdx.audio.newSound(Gdx.files.internal("Rocket-Sound.wav"));
-        //doorSound = Gdx.audio.newSound(Gdx.files.internal("doorwood_open.wav"));
-
-
-        createActors();
-        createObstacles();
-
-
+    public LevelFactory(MyGdxGame game) {
+        this.game = game;
     }
 
 
@@ -143,7 +85,7 @@ public class LevelFactory  {
 
 
 
-
+    OrthographicCamera camera; // resolution fix
 
 
     // private Texture Level22;
@@ -200,6 +142,7 @@ public class LevelFactory  {
     private ArrayList<Bullet> enemyBullets;
     private ArrayList<Door> doors;
     private ArrayList<Elevator> elevators;
+    Texture [] animation = new Texture[9];
 
 
     //private ArrayList<HealthPack> healthPacks3;
@@ -413,6 +356,9 @@ public class LevelFactory  {
         Gdx.gl.glClearColor(1, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+
+        camera.update();
+        batch.setProjectionMatrix(camera.combined);
 
 
         batch.draw(levelImg, 0, 0, 1280, 720);
@@ -997,6 +943,87 @@ public class LevelFactory  {
         }
     }
 
+    @Override
+    public void show() {
+        batch = new SpriteBatch();
+        levelImg = new Texture("brickWall.png");
+        //titleScreen = new Texture("gWelcome.png");
+        // instScreen = new Texture("gInstructions.png");
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false,1280,720); // set resolution
+        hpBar = new Texture("fullHP.png");
+        hpBar80 = new Texture("80hp.png");
+        hpBar50 = new Texture("50HP.png");
+        hpBar30 = new Texture("30 hp.png");
+        hpBar10 = new Texture("10 hp.png");
+        elevatorWire = new Texture("wire2.png");
+        gameOver = new Texture("Game_over2.png");
+        bulletTexture = new Texture("OrangeScale__003.png");
+        obstacleTexture = new Texture("we.png");
+        openDoorTexture = new Texture("DoorOpen.png");
+        closedDoorTexture = new Texture("DoorUnlocked.png");
+        osynligTexture = new Texture("osynlig.png");
+        enemyIdleTexture = new Texture("s1.png");
+        playerIdleTexture = new Texture("Walk_Shoot__005.png");
+        playerIdleUpdateTexture = new Texture("i1.png");
+        playerAnimation1 = new Texture("Run_Shoot__001.png");
+        playerAnimation2 = new Texture("Run_Shoot__002.png");
+        playerAnimation3 = new Texture("Run_Shoot__003.png");
+        playerAnimation4 = new Texture("Run_Shoot__004.png");
+        playerAnimation5 = new Texture("Run_Shoot__005.png");
+        playerAnimation6 = new Texture("Run_Shoot__006.png");
+        playerAnimation7 = new Texture("Run_Shoot__007.png");
+        playerAnimation8 = new Texture("Run_Shoot__008.png");
+        playerAnimation9 = new Texture("Run_Shoot__009.png");
+
+        playerJumpImage = new Texture("j1.png");
+        playerDuckImage = new Texture("lay.png");
+
+        //Level22 = new Texture("bloody_wall.jpg");
+
+        //exitSign = new Texture("exit_sign.gif");
+        //gameDone = new Texture("gameFinished1.png");
+        //LevelClear = new Texture("LevelClear.png");
+        //scoreFont = new BitmapFont(Gdx.files.internal("font.fnt"));
+        //gunShotSound = Gdx.audio.newSound(Gdx.files.internal("Gun_Fire.wav"));
+        m4Sound = Gdx.audio.newSound(Gdx.files.internal("M4A1_SingleShot.mp3"));
+        //elevatorSound = Gdx.audio.newSound(Gdx.files.internal("Elevator_Stop.wav"));
+        //loopSound = Gdx.audio.newSound(Gdx.files.internal("Beyond_Sanity__192.mp3"));
+        //  keySound = Gdx.audio.newSound(Gdx.files.internal("gold.wav"));
+        // guitarLoop = Gdx.audio.newSound(Gdx.files.internal("eGuitarLoop.wav"));
+        //rocketSound = Gdx.audio.newSound(Gdx.files.internal("Rocket-Sound.wav"));
+        //doorSound = Gdx.audio.newSound(Gdx.files.internal("doorwood_open.wav"));
+
+
+        createActors();
+        createObstacles();
+    }
+
+    @Override
+    public void render(float delta) {
+        testLevel();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
     public void dispose() {
         levelImg.dispose();
         hpBar80.dispose();
@@ -1004,7 +1031,7 @@ public class LevelFactory  {
         hpBar30.dispose();
         hpBar50.dispose();
         elevatorWire.dispose();
-      batch.dispose();
+        batch.dispose();
         m4Sound.dispose();
         hpBar.dispose();
         gameOver.dispose();
@@ -1027,12 +1054,6 @@ public class LevelFactory  {
         playerAnimation9.dispose();
         playerJumpImage.dispose();
         playerDuckImage.dispose();
-
-
-
-
-
-
 
     }
 
@@ -1099,7 +1120,10 @@ public class LevelFactory  {
 
             gamePosStorage.setEndGamePlayer(true);
 
+            // switch screen here
         }
+
+
     }
 
 }
