@@ -26,7 +26,7 @@ public class AndroidLauncher extends AndroidApplication {
 
 	//Variable for brightness value
 	private int brightness;
-	//Content resolver used as handle to the system's settings
+	//Content resolver used as handle to the systems settings
 	private ContentResolver contentResolver;
 	//Window object that stores a reference to the current window
 	private Window window;
