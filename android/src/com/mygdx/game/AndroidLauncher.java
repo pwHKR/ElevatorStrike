@@ -4,6 +4,7 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.provider.Settings;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
@@ -58,26 +60,27 @@ public class AndroidLauncher extends AndroidApplication {
 
 		window = getWindow();
 
-		try {
-			// To handle the auto
-			Settings.System.putInt(contentResolver,
-					Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
-			//Get the current system brightness
-			brightness = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS);
-		}
-		catch (Settings.SettingNotFoundException e) {
-			Log.e("Error", "Cannot access system brightness");
-			e.printStackTrace();
-		}
+		if (Build.VERSION.SDK_INT < 21) {
+			try {
+				// To handle the auto
+				Settings.System.putInt(contentResolver,
+						Settings.System.SCREEN_BRIGHTNESS_MODE, Settings.System.SCREEN_BRIGHTNESS_MODE_MANUAL);
+				//Get the current system brightness
+				brightness = Settings.System.getInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS);
+			}
+			catch (Settings.SettingNotFoundException e) {
+				Log.e("Error", "Cannot access system brightness");
+				e.printStackTrace();
+			}
 
-		//Set the system brightness in if statement below
-		if(batteryPct < 0.5 || !isCharging){
-			Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 125);
+			//Set the system brightness in if statement below
+			if(batteryPct < 0.5 || !isCharging){
+				Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 125);
+			}
+
+			//Test
+			//Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 40);
 		}
-
-		//Test
-		//Settings.System.putInt(contentResolver, Settings.System.SCREEN_BRIGHTNESS, 40);
-
 
 		try {
 			Class.forName("com.mysql.jdbc.Driver").newInstance();

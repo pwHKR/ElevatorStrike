@@ -7,8 +7,8 @@ import com.mygdx.game.Actor.Abstract.Actor;
 /**
  * Created by woojen on 2016-12-29.
  */
-public class Explossion extends Actor {
-    public Explossion(Texture textureFileName, float x, float y, int size) {
+public class Explosion extends Actor {
+    public Explosion(Texture textureFileName, float x, float y, int size) {
         super(textureFileName, x, y, size);
     }
 
