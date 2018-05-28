@@ -168,6 +168,7 @@ public class DBTest extends Thread implements Multiplayer {
                     endGameReset();
                     // set end game to db
 
+                    posStorage.setResetEndGame(true);
 
                 }
 

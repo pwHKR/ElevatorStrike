@@ -98,8 +98,16 @@ public class MyGdxGame extends Game {
         if(renderPos.isEndGamePlayer()){
 
             renderPos.setEndGamePlayer(true);
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
 
+            while(true){
 
+                if (renderPos.isResetEndGame()){
+            Gdx.app.exit();}}
         }
 
     }

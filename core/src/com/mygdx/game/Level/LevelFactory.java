@@ -39,7 +39,6 @@ public class LevelFactory implements Screen {
     private float sendLimit;
 
 
-
     private enum GameStatus {
         MENU,
         LEVEL1,
@@ -82,7 +81,6 @@ public class LevelFactory implements Screen {
 
     private Texture playerJumpImage;
     private Texture playerDuckImage;
-
 
 
     OrthographicCamera camera; // resolution fix
@@ -142,7 +140,7 @@ public class LevelFactory implements Screen {
     private ArrayList<Bullet> enemyBullets;
     private ArrayList<Door> doors;
     private ArrayList<Elevator> elevators;
-    Texture [] animation = new Texture[9];
+    Texture[] animation = new Texture[9];
 
 
     private float fpsCounter = 0;
@@ -168,11 +166,6 @@ public class LevelFactory implements Screen {
 
 
     public void testLevel() {
-
-
-
-
-
 
 
         checkInput();
@@ -317,7 +310,6 @@ public class LevelFactory implements Screen {
         }
 
 
-
         gamePosStorage = PosStorage.getInstance();
         opponent.setY(gamePosStorage.getEnemyPosY_DB());
         opponent.setX(gamePosStorage.getEnemyPosX_DB());
@@ -389,9 +381,6 @@ public class LevelFactory implements Screen {
         }
 
 
-
-
-
         //ritar ut enemyBullets
         for (Bullet enemyBullet : enemyBullets) {
             if (enemyBullet != null) {
@@ -400,7 +389,6 @@ public class LevelFactory implements Screen {
                 enemyBullet.draw(batch);
             }
         }
-
 
 
         // Ritar ut dörrar
@@ -478,7 +466,6 @@ public class LevelFactory implements Screen {
 
         drawHpBar();
         batch.end();
-
 
 
     }
@@ -594,13 +581,11 @@ public class LevelFactory implements Screen {
 
         gamePosStorage = PosStorage.getInstance();
 
-        if(gamePosStorage.isPlayer1()){
+        if (gamePosStorage.isPlayer1()) {
 
             playerX = 20;
             playerY = 600;
-        }
-
-        else{
+        } else {
 
             playerX = 800;
             playerY = 50;
@@ -613,12 +598,9 @@ public class LevelFactory implements Screen {
         opponent = new Enemy(enemyIdleTexture, 20, 600, 50, 200);
 
 
-
-
-
-        Player player = new Player(playerIdleTexture, playerX, playerY, 50, 200, false, false,playerIdleUpdateTexture,
-                playerAnimation1,playerAnimation2,playerAnimation3,playerAnimation4,playerAnimation5,playerAnimation6,playerAnimation7,playerAnimation8,
-                playerAnimation9,playerJumpImage,playerDuckImage); // new parameters in the Player class
+        Player player = new Player(playerIdleTexture, playerX, playerY, 50, 200, false, false, playerIdleUpdateTexture,
+                playerAnimation1, playerAnimation2, playerAnimation3, playerAnimation4, playerAnimation5, playerAnimation6, playerAnimation7, playerAnimation8,
+                playerAnimation9, playerJumpImage, playerDuckImage); // new parameters in the Player class
 
         player.setSpeedY(-1); // gravity to -1
         players.add(player);
@@ -984,7 +966,7 @@ public class LevelFactory implements Screen {
         //titleScreen = new Texture("gWelcome.png");
         // instScreen = new Texture("gInstructions.png");
         camera = new OrthographicCamera();
-        camera.setToOrtho(false,1280,720); // set resolution
+        camera.setToOrtho(false, 1280, 720); // set resolution
         hpBar = new Texture("fullHP.png");
         hpBar80 = new Texture("80hp.png");
         hpBar50 = new Texture("50HP.png");
@@ -1113,60 +1095,45 @@ public class LevelFactory implements Screen {
         }
 
 
-
     }
 
-    private void getEnemyBulletLogic(){
+    private void getEnemyBulletLogic() {
 
         gamePosStorage = PosStorage.getInstance();
 
-        if(gamePosStorage.isNewEnemyBullet()){
+        if (gamePosStorage.isNewEnemyBullet()) {
 
-        int direction;
+            int direction;
 
 
+            if (gamePosStorage.isEnemyBulletDirecton_DB()) {
 
-        if(gamePosStorage.isEnemyBulletDirecton_DB()){
+                direction = 6;
+            } else {
 
-            direction = 6;
+                direction = -6;
+            }
+
+
+            Bullet bullet = new Bullet(bulletTexture, gamePosStorage.getEnemyBulletX_DB(), gamePosStorage.getEnemyBulletY_DB(), 10);
+            bullet.setSpeedX(direction);
+
+            enemyBullets.add(bullet);
+            gamePosStorage.setNewEnemyBullet(false);
+
         }
+    }
 
-        else {
-
-            direction = -6;
-        }
+    private void endGame() {
 
 
-        Bullet bullet = new Bullet(bulletTexture, gamePosStorage.getEnemyBulletX_DB(), gamePosStorage.getEnemyBulletY_DB(), 10);
-        bullet.setSpeedX(direction);
-
-        enemyBullets.add(bullet);
-        gamePosStorage.setNewEnemyBullet(false);
-
-    }}
-
-    private void endGame(){
-
-
-
-        if(players.get(0).GetHP() <= 0){
+        if (players.get(0).GetHP() <= 0) {
             gamePosStorage = PosStorage.getInstance();
 
             gamePosStorage.setEndGamePlayer(true);
 
 
-
-            try {
-                Thread.sleep(4000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
         }
-
-
-
-
-
 
 
     }
