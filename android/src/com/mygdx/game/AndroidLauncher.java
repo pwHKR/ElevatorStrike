@@ -7,6 +7,7 @@ import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.BatteryManager;
 import android.os.Build;
+
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -15,12 +16,10 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.provider.Settings;
 
+
 import com.badlogic.gdx.backends.android.AndroidApplication;
 import com.badlogic.gdx.backends.android.AndroidApplicationConfiguration;
-
-import java.sql.SQLException;
-
-
+import com.badlogic.gdx.graphics.g2d.CpuSpriteBatch;
 
 
 public class AndroidLauncher extends AndroidApplication {
@@ -93,6 +92,9 @@ public class AndroidLauncher extends AndroidApplication {
 		}
 
 		Thread testConn = new DBTest();
+
+
+
 
 
 		testConn.start();

@@ -145,6 +145,10 @@ public class LevelFactory implements Screen {
     Texture [] animation = new Texture[9];
 
 
+    private float fpsCounter = 0;
+    boolean onceFpsCounter;
+
+
     //private ArrayList<HealthPack> healthPacks3;
     //private ArrayList<Obstacle> walls;
 
@@ -164,6 +168,13 @@ public class LevelFactory implements Screen {
 
 
     public void testLevel() {
+
+
+
+
+
+
+
         checkInput();
 
 
@@ -467,6 +478,9 @@ public class LevelFactory implements Screen {
 
         drawHpBar();
         batch.end();
+
+
+
     }
 
 
@@ -575,14 +589,34 @@ public class LevelFactory implements Screen {
         bullets = new ArrayList();
         enemyBullets = new ArrayList();
 
+        float playerX;
+        float playerY;
 
-        Enemy e1 = new Enemy(enemyIdleTexture, 20, 600, 50, 50);
+        gamePosStorage = PosStorage.getInstance();
+
+        if(gamePosStorage.isPlayer1()){
+
+            playerX = 20;
+            playerY = 600;
+        }
+
+        else{
+
+            playerX = 800;
+            playerY = 50;
+        }
+
+
+        Enemy e1 = new Enemy(enemyIdleTexture, 20, 600, 50, 200);
         enemies.add(e1);
 
-        opponent = new Enemy(enemyIdleTexture, 20, 600, 50, 30);
+        opponent = new Enemy(enemyIdleTexture, 20, 600, 50, 200);
 
 
-        Player player = new Player(playerIdleTexture, 20, 600, 50, 100, false, false,playerIdleUpdateTexture,
+
+
+
+        Player player = new Player(playerIdleTexture, playerX, playerY, 50, 200, false, false,playerIdleUpdateTexture,
                 playerAnimation1,playerAnimation2,playerAnimation3,playerAnimation4,playerAnimation5,playerAnimation6,playerAnimation7,playerAnimation8,
                 playerAnimation9,playerJumpImage,playerDuckImage); // new parameters in the Player class
 
@@ -1120,8 +1154,19 @@ public class LevelFactory implements Screen {
 
             gamePosStorage.setEndGamePlayer(true);
 
-            // switch screen here
+
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
         }
+
+
+
+
+
 
 
     }

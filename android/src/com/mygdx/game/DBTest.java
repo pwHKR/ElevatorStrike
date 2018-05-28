@@ -38,7 +38,7 @@ public class DBTest extends Thread implements Multiplayer {
 
     public DBTest() {
 
-        isPlayer1 = true; // Used for Testing. See Comment in variable decleration
+       // Used for Testing. See Comment in variable decleration
 
 
         connectionURL = "jdbc:mysql://206.189.50.69:3306/" + dbName + "?user=" + user + "&password=" + password + "&useSSL=false";
@@ -47,7 +47,10 @@ public class DBTest extends Thread implements Multiplayer {
 
 
 
+
     }
+
+
 
     public void testDB() {
 
@@ -79,9 +82,18 @@ public class DBTest extends Thread implements Multiplayer {
     @Override
     public void run() {
 
+
+
+
         testDB();
 
-        endGameReset();
+
+
+        //endGameReset();
+
+        setPlayerID();
+
+       // setReady(false);
 
 
 
@@ -94,9 +106,28 @@ public class DBTest extends Thread implements Multiplayer {
 
 
 
+            if(posStorage.isUpdateSplashScreen()){
+
+                //setReady(posStorage.isStartGame());
+
+
+                //posStorage.setStartGameEnemy(getReadyEnemy());
+
+
+                posStorage.setFull(isFull());
+
+
+
+
+
+
+            }
+
 
 
             if (posStorage.isUpdate()) {
+
+
 
                 posStorage.setEndGameEnemy(getEndGameEnemy());
 
@@ -133,10 +164,14 @@ public class DBTest extends Thread implements Multiplayer {
                 if (posStorage.isEndGamePlayer()){
 
                     setEndGamePlayer(true);
+                    isTakenReset();
+                    endGameReset();
                     // set end game to db
 
 
                 }
+
+                posStorage.setEndGameEnemy(getEndGameEnemy());
 
 
 
@@ -595,7 +630,7 @@ public class DBTest extends Thread implements Multiplayer {
 
 
     public boolean getEndGameEnemy() {
-        boolean newEnemyBullet = false;
+        boolean result = false;
 
 
         if (isPlayer1) {
@@ -617,7 +652,7 @@ public class DBTest extends Thread implements Multiplayer {
 
             while (rs.next()) {
 
-                newEnemyBullet = rs.getBoolean("endGame");
+                result = rs.getBoolean("endGame");
 
 
             }
@@ -625,7 +660,7 @@ public class DBTest extends Thread implements Multiplayer {
         } catch (Exception e) {
         }
 
-        return newEnemyBullet;
+        return result;
 
     }
 
@@ -680,5 +715,249 @@ public class DBTest extends Thread implements Multiplayer {
 
 
     }
+
+    public void isTakenReset() {
+
+
+
+        String query = "UPDATE `Player` SET `isTaken`= 0 where id > 0";
+
+        try {
+
+            Statement stmt = connection.createStatement();
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e) {
+        }
+
+
+
+
+    }
+
+    public void setReady(boolean ready) {
+
+        int tinyInt;
+
+        if (ready) {
+            tinyInt = 1;
+        } else {
+            tinyInt = 0;
+        }
+
+
+        if (isPlayer1) {
+            id = 1;
+
+        } else {
+            id = 2;
+
+
+        }
+
+
+
+
+        String query = "UPDATE `Player` SET `StartGame`=" + tinyInt + " where id=" + id;
+
+        try {
+
+            Statement stmt = connection.createStatement();
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e) {
+        }
+
+
+    }
+
+
+
+    public void setIsTaken(boolean taken, int id) {
+
+        int tinyInt;
+
+        if (taken) {
+            tinyInt = 1;
+        } else {
+            tinyInt = 0;
+        }
+
+
+
+
+
+        String query = "UPDATE `Player` SET `isTaken`=" + tinyInt + " where id=" + id;
+
+        try {
+
+            Statement stmt = connection.createStatement();
+
+            stmt.executeUpdate(query);
+
+        } catch (Exception e) {
+        }
+
+
+    }
+
+
+    public boolean getReadyEnemy() {
+
+        boolean ready = false;
+
+
+        if (isPlayer1) {
+            id = 1;
+        } else {
+            id = 2;
+        }
+
+        int positionY = 0;
+
+        String query = "SELECT StartGame FROM `Player` WHERE id =" + id;
+
+
+        try {
+
+            Statement statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery(query);
+
+
+            while (rs.next()) {
+
+                ready = rs.getBoolean("StartGame");
+
+
+            }
+
+        } catch (Exception e) {
+        }
+
+        return ready;
+
+
+    }
+
+
+    public void setPlayerID() {
+
+        int idFromDB = 0;
+
+
+
+
+
+
+
+
+
+
+
+
+        String query = "SELECT Count(isTaken) FROM `Player` WHERE isTaken = 1";
+
+
+
+
+        try {
+
+            Statement statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery(query);
+
+
+
+            while (rs.next()) {
+
+                idFromDB = rs.getInt("Count(isTaken)");
+
+
+            }
+
+        } catch (Exception e) {
+
+        }
+
+
+
+
+        Gdx.app.log("idINT",String.valueOf(idFromDB));
+
+        posStorage = PosStorage.getInstance();
+
+        if (idFromDB == 0){
+
+            setIsTaken(true,1);
+
+
+            isPlayer1 = true;
+            posStorage.setPlayer1(true);
+
+
+        }
+
+
+        if (idFromDB == 1){
+
+            setIsTaken(true,2);
+            isPlayer1 = false;
+            posStorage.setPlayer1(false);
+
+        }
+
+        if (idFromDB >= 2){
+
+            Gdx.app.log("isfull","Game is full");
+        }
+
+
+
+    }
+
+    public boolean isFull(){
+
+        int countFromDB = 0;
+        boolean result;
+
+        String query = "SELECT Count(isTaken) FROM `Player` WHERE isTaken = 1";
+
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(query);
+
+
+
+            while (rs.next()) {
+
+                countFromDB = rs.getInt("Count(isTaken)");
+
+
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        if(countFromDB == 2){
+
+            result = true;
+
+        }
+
+        else{result = false;}
+
+
+        return  result;
+
+}
+
+
+
 
 }

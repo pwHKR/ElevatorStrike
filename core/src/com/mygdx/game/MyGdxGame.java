@@ -39,6 +39,7 @@ public class MyGdxGame extends Game {
 
 
 
+
        // Gdx.app.log("Room names",dbh.getRoomNames().get(0));
 
 
@@ -59,19 +60,37 @@ public class MyGdxGame extends Game {
 
     public void render() {
 
+
         super.render();
+
+
+        try {
+            Thread.sleep(10);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
 
         renderPos = PosStorage.getInstance();
 
         renderPos.setUpdate(true);
 
-
+        Gdx.app.log("endGame",String.valueOf(renderPos.isEndGameEnemy()));
 
         if(renderPos.isEndGameEnemy()){
 
 
-            //Gdx.app.exit();
+
+
+            try {
+                Thread.sleep(4000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+
+            renderPos.setResetEndGame(true);
+            Gdx.app.exit();
 
 
         }

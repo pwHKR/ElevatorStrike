@@ -11,10 +11,15 @@ public class PosStorage {
     private float enemyPosX_DB;
     private float  enemyPosY_DB;
 
+    private boolean isTaken;
+
     private float playerPosX_DB;
     private float playerPosY_DB;
 
     private boolean isUpdate;
+    private boolean isUpdateSplashScreen;
+
+    private boolean isPlayer1;
 
 
     private float enemyBulletX_DB;
@@ -32,6 +37,11 @@ public class PosStorage {
     private boolean endGameEnemy;
 
     private boolean resetEndGame;
+
+    private boolean startGame;
+    private boolean startGameEnemy;
+
+    private boolean isFull;
 
     private boolean resetPlayerEndGameOny;
 
@@ -176,6 +186,51 @@ public class PosStorage {
         this.resetEndGame = resetEndGame;
     }
 
+    public synchronized boolean isPlayer1() {
+        return isPlayer1;
+    }
 
+    public synchronized void setPlayer1(boolean player1) {
+        isPlayer1 = player1;
+    }
 
+    public synchronized boolean isStartGame() {
+        return startGame;
+    }
+
+    public synchronized void setStartGame(boolean startGame) {
+        this.startGame = startGame;
+    }
+
+    public synchronized boolean isStartGameEnemy() {
+        return startGameEnemy;
+    }
+
+    public synchronized void setStartGameEnemy(boolean startGameEnemy) {
+        this.startGameEnemy = startGameEnemy;
+    }
+
+    public synchronized boolean isUpdateSplashScreen() {
+        return isUpdateSplashScreen;
+    }
+
+    public synchronized void setUpdateSplashScreen(boolean updateSplashScreen) {
+        isUpdateSplashScreen = updateSplashScreen;
+    }
+
+    public synchronized boolean isFull() {
+        return isFull;
+    }
+
+    public synchronized void setFull(boolean full) {
+        isFull = full;
+    }
+
+    public boolean isTaken() {
+        return isTaken;
+    }
+
+    public void setTaken(boolean taken) {
+        isTaken = taken;
+    }
 }

@@ -8,20 +8,27 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mygdx.game.Level.LevelFactory;
 
+import DB.PosStorage;
+
 public class SplashScreen implements Screen {
 
     private SpriteBatch batch;
     private Texture background;
     private Texture titleText;
     private Texture screenText;
+    private Texture player1;
+    private Texture player2;
     private OrthographicCamera camera;
     private MyGdxGame game;
+    private PosStorage beforeGame;
 
 
     public SplashScreen(MyGdxGame game) {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false,1280,720);
+        beforeGame = PosStorage.getInstance();
+        beforeGame.setUpdateSplashScreen(true);
     }
     @Override
     public void show() {
@@ -75,7 +82,22 @@ public class SplashScreen implements Screen {
     }
 
     private void handleInput() {
-        if (Gdx.input.isTouched()) {
+
+        beforeGame = PosStorage.getInstance();
+
+
+
+
+
+
+
+        if (beforeGame.isFull()) {
+
+
+
+            beforeGame.setUpdateSplashScreen(false);
+
+
             game.setScreen(new LevelFactory(game));
             dispose();
         }
